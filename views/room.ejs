@@ -1,7 +1,67 @@
 <%- include ('./header.ejs') %>
+  <link rel="stylesheet" href="css/room.css" type = "text/css" media = "screen">
   <title>Express-HoneyChat</title>
+  <script>
+    function roomTabsSwitch(select, tabs_prefix, contents_prefix){
+      const s_Array = ['rooms', 'list', 'profile'];
+
+      s_Array.forEach(function(s) {
+        const shopTab = '#' + tabs_prefix + s;
+        const shopContent = '#' + contents_prefix + s;
+        if(s === select){
+          $(shopTab).addClass('active');
+          $(shopContent).css('display', 'block');
+        }else{
+          $(shopTab).removeClass('active');
+          $(shopContent).css('display', 'none');
+        }
+      });
+    }
+  </script>
 </head>
 <body>
-  room
+  <div class = "background" ></div>
+
+  <div class = "honeychat_box">
+    <header>
+      <h4 class = "title">HoneyChat <small>rooms</small></h4>
+    </header>
+    <div class = "user_bar">
+      <h4 class = "user" >username : <%= user %></h4>
+      <button id = "create_btn" class = "btn">create</button>
+      <button id = "delete_btn" class = "btn">delete</button>
+    </div>
+    <div class = "tabs_area">
+      <ul class = "tabs">
+        <li><a href="javascript:roomTabsSwitch('rooms', 'tab_', 'content_')" id = "tab_rooms" class = "active">rooms</a></li>
+        <li><a href="javascript:roomTabsSwitch('list', 'tab_', 'content_')" id = "tab_list">my room list</a></li>
+        <li><a href="javascript:roomTabsSwitch('profile', 'tab_', 'content_')" id = "tab_profile">profile</a></li>
+      </ul>
+
+      <div id = "content_rooms" class = "content content_rooms">
+        <ul>
+          <li><a href="">room name</a><small>(1/10)</small></li>
+          <li><a href="">room name</a><small>(2/10)</small></li>
+          <li><a href="">room name</a><small>(3/10)</small></li>
+          <li><a href="">room name</a><small>(4/10)</small></li>
+          <li><a href="">room name</a><small>(7/10)</small></li>
+          <li><a href="">room name</a><small>(10/10)</small></li>
+          <li><a href="">room name</a><small>(2/10)</small></li>
+          <li><a href="">room name</a><small>(9/10)</small></li>
+        </ul>
+      </div>
+      <div id = "content_list" class = "content content_rooms">
+        <ul>
+          <li><a href="">room name</a><small>(1/10)</small></li>
+          <li><a href="">room name</a><small>(2/10)</small></li>
+        </ul>
+      </div>
+      <div id = "content_profile" class = "content content_profile">
+        <ul>
+          <li><span class = "profile_name">username</span> <span class = "profile"><%= user %></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
