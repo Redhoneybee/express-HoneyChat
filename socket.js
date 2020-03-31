@@ -1,5 +1,5 @@
 
-const socketID = require('socket.io');
+const socketIO = require('socket.io');
 
 module.exports = (server, app, middleSession) =>{
   const io = socketIO(server, {
