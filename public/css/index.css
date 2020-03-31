@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap');
+
+@keyframes bgFadeIn{
+  from{
+    opacity : 0;
+  }to{
+    opacity : 1;
+  }
+}
+body{
+ width : 100%;
+ height : 100%;
+ background-color : #ecf0f1;
+}
+.background{
+  position : absolute;
+  top : 0;
+  left : 0;
+  width : 100%;
+  height : 100%;
+  z-index : -1;
+  background-image : url(../image/main-background.jpg);
+  background-repeat : no-repeat;
+  animation : bgFadeIn .8s;
+}
+.user-box{
+  margin : 300px auto 0 auto;
+  width : 400px;
+}
+
+header h4{
+  color : #519D9E;
+  font-size: 42px;
+  font-weight : bold;
+  text-align : center;
+  letter-spacing : 2px;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.tabs-area{
+  border-radius : 5px;
+  background-color : 0;
+  padding : 9px;
+}
+
+ul.tabs{
+  text-align : center;
+  margin : 0px; padding : 0px;
+}
+ul.tabs li{
+  list-style : none;
+  margin : 15px 0 15px 0;
+}
+ul.tabs li a{
+  text-decoration : none;
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing : 5px;
+  background-color : #519D9E;
+  color : #FFFFF3;
+  font-size : 24px;
+  font-weight : bold;
+  padding : 5px 9px 5px 9px;
+}
+ul.tabs li a:hover{
+  background-color : #FFFFF3;
+  color : #519D9E;
+}
+ul.tabs li a:active, ul.tabs li a.active{
+  background-color : #fff;
+  color : #519D9E;
+}
+
+.content{
+  background-color : #FFFFF3;
+  color : #519D9E;
+  border-radius : 5px;
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing : 4px;
+  text-transform : uppercase;
+}
+.content table{
+  padding : 0 35px 0 35px;
+}
+
+.content button {
+  display : flex;
+  color : #519D9E;
+  font-size: 24px;
+  padding : 9px;
+  font-family: 'Luckiest Guy', cursive;
+  margin : 10px auto 5px auto;
+  background : 0;
+  border : 0;
+}
+
+.content input[type="text"]
+,.content input[type="password"]{
+  background-color : #FFFFF3;
+  text-align : center;
+  border : 0;
+  border-bottom : 1px solid #58C9B9;
+}
+
+.content button:focus, input:focus{
+  outline : none;
+}
+.content button:hover{
+  color : #111;
+}
+.content button:active{
+  color : #9DC8C8;
+}
+
+
+#content_1, #content_2 { display : none; }

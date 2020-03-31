@@ -1,0 +1,55 @@
+<%- include ('./header.ejs') %>
+  <link rel="stylesheet" href="css/index.css" type = "text/css" media = "screen">
+  <script type = "application/javascript" src = "js/main.js"></script>
+  <title>Express-HoneyChat</title>
+</head>
+<body>
+  <div class = "background"></div>
+  <div class = "user-box">
+    <header>
+      <h4>HoneyChat</h4>
+    </header>
+    <div class = "tabs-area">
+      <ul class = "tabs">
+        <li><a href="javascript:tabsSwitch(1, 2, 'tab_', 'content_')" id = "tab_1">LOGIN</a></li>
+        <li><a href="javascript:tabsSwitch(2, 2, 'tab_', 'content_')" id = "tab_2">JOIN</a></li>
+      </ul>
+
+      <div id = "content_1" class = "content">
+        <form action="/auth/login" method = "post">
+          <table>
+            <tr>
+              <th><label for="ID">ID</label></th>
+              <th><input type="text" name = "id" placeholder = "id" required></th>
+            </tr>
+            <tr>
+              <th><label for="PASSWORD">PASSWORD</label></th>
+              <th><input type="password" name = "password" placeholder = "password" required></th>
+            </tr>
+          </table>
+          <button type = "submit">LOGIN</button>
+        </form>
+      </div>
+      <div id = "content_2" class = "content">
+        <form action="/auth/join" method = "post">
+          <table>
+            <tr>
+              <th><label for="ID">ID</label></th>
+              <th><input type="text" name = "id" placeholder = "id" required></th>
+            </tr>
+            <tr>
+              <th><label for="PASSWORD">PASSWORD</label></th>
+              <th><input type="password" name = "password" placeholder = "password" required></th>
+            </tr>
+            <tr>
+              <th><label for="USERNAME">USERNAME</label></th>
+              <th><input type="text" name = "username" placeholder = "username" required></th>
+            </tr>
+          </table>
+          <button type = "submit">JOIN</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
