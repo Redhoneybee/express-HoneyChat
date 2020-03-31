@@ -8,6 +8,8 @@ router.get('/', (req, res, next) =>{
 });
 
 router.get('/room', isLogin, (req, res, next) =>{
-  res.render('room');
+  res.render('room', {
+    user : req.user.username
+  });
 });
 module.exports = router;

@@ -23,7 +23,7 @@ router.post('/login', isNotLogin, (req, res, next) =>{
         console.error(loginError);
         return next(loginError);
       }
-      return res.render('room');
+      return res.redirect('/room');
     });
   })(req, res, next);
 });
