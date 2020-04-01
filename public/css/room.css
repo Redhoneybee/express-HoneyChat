@@ -50,20 +50,7 @@ div.user_bar .user{
   font-weight : bold;
   text-transform : uppercase;
 }
-div.user_bar .btn{
-  background : 0;
-  border : 0;
-  color : #6F3B48;
-  text-transform : uppercase;
-  font-weight : bold;
-  cursor : pointer;
-}
-div.user_bar .btn:focus{
-  outline : none;
-}
-div.user_bar .btn:active{
-  color : #fff;
-}
+
 div.tabs_area{
   background-color : #6F3B48;
   padding : 9px;
@@ -102,11 +89,13 @@ ul.tabs li a:active, ul.tabs li a.active{
   margin : 0px;
 }
 .content ul
+,.content_create ul
 ,.content_profile ul{
   margin : 0;
   padding-left : 7px;
 }
 .content_rooms ul li
+,.content_create ul li
 ,.content_profile ul li{
   display : flex;
   list-style : none;
@@ -115,18 +104,72 @@ ul.tabs li a:active, ul.tabs li a.active{
   border-bottom : 1px solid #E5CCC8;
 }
 .content_rooms ul li:last-child
+,.content_create ul li:last-child
 ,.content_profile ul li:last-child{
   border-bottom : 0;
 }
+.content_create ul li:last-child{
+  justify-content : center;
+}
 
 .content_rooms ul li a
+,.content_create ul li label
 ,.content_profile ul li .profile_name{
   text-decoration : none;
   color : #6F3B48;
   font-weight : bold;
   letter-spacing : -1px;
 }
-.content_profile ul li .profile_name{
+
+.content_create ul li input[type = checkbox]{
+  position : relative;
+  top : 2px;
+}
+
+.content_create ul li input[type = text]
+,.content_create ul li input[type = password]
+,.content_create ul li select{
+  position : relative;
+  margin-left : auto;
+  right : 7px;
+}
+
+.content_create ul li input[type = text]
+,.content_create ul li input[type = password]
+,.content_create ul li select
+,.content_create ul li button{
+  border : 1px solid #6F3B48;
+  padding : 4px;
+  background : 0;
+}
+.content_create ul li select{
+  padding : 0px;
+}
+
+.content_create ul li input[type = text]:focus
+,.content_create ul li input[type = password]:focus
+,.content_create ul li select:focus
+,.content_create ul li button{
+  outline : none;
+}
+
+.content_create ul li input[type = password]:disabled{
+  border : 1px solid #E5CCC8;
+  background-color : #E5CCC8;
+}
+.content_create ul li button{
+  text-transform : uppercase;
+}
+.content_create ul li button:hover{
+  background-color : #6F3B48;
+  color : #FFFFF3;
+}
+.content_create ul li button:active{
+  background-color : #522632;
+  color : #fff;
+}
+.content_create ul li label
+,.content_profile ul li .profile_name{
   text-transform : uppercase;
 }
 .content_rooms ul li a:hover{
@@ -143,4 +186,7 @@ ul.tabs li a:active, ul.tabs li a.active{
   right : 7px;
 }
 
-#content_list, #content_profile{ display : none; }
+
+#content_create
+,#content_list
+,#content_profile{display : none; }

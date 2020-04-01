@@ -3,7 +3,7 @@
   <title>Express-HoneyChat</title>
   <script>
     function roomTabsSwitch(select, tabs_prefix, contents_prefix){
-      const s_Array = ['rooms', 'list', 'profile'];
+      const s_Array = ['rooms', 'create', 'list', 'profile'];
 
       s_Array.forEach(function(s) {
         const shopTab = '#' + tabs_prefix + s;
@@ -17,6 +17,47 @@
         }
       });
     }
+    function paintToChecked(check){
+      const passwordInput = $(':password');
+      if(check){
+        // checked is truea
+        // password use
+        passwordInput.attr('disabled', false);
+      }else{
+        // checked is false
+        // password not use
+        passwordInput.attr('disabled', true);
+      }
+    }
+    function getRoomList(){
+      $.ajax({
+        url : 'http://localhost:3000/room/roomAll',
+        method : 'POST',
+        dataType : 'json'
+      })
+      .done((json) =>{
+        console.log(json);
+      })
+      .fail((xhr, status, errorToken) =>{
+        console.log(status, errorToken);
+      })
+      .always((xhr, status) =>{
+        
+      });
+    }
+    function handlerChecked(event){
+      paintToChecked(event.target.checked);
+    }
+    $(document).ready(function(){
+      for(let i = 2; i <= 10; ++i){
+        $('#content_create select').append(`<option value = ${i}>${i}</option>`);
+      }
+
+      paintToChecked($('.password_checkbox').checked);
+      $('.password_checkbox').change(handlerChecked);
+
+      getRoomList();
+    });
   </script>
 </head>
 <body>
@@ -28,12 +69,11 @@
     </header>
     <div class = "user_bar">
       <h4 class = "user" >username : <%= user %></h4>
-      <button id = "create_btn" class = "btn">create</button>
-      <button id = "delete_btn" class = "btn">delete</button>
     </div>
     <div class = "tabs_area">
       <ul class = "tabs">
         <li><a href="javascript:roomTabsSwitch('rooms', 'tab_', 'content_')" id = "tab_rooms" class = "active">rooms</a></li>
+        <li><a href="javascript:roomTabsSwitch('create', 'tab_', 'content_')" id = "tab_create">create</a></li>
         <li><a href="javascript:roomTabsSwitch('list', 'tab_', 'content_')" id = "tab_list">my room list</a></li>
         <li><a href="javascript:roomTabsSwitch('profile', 'tab_', 'content_')" id = "tab_profile">profile</a></li>
       </ul>
@@ -50,6 +90,28 @@
           <li><a href="">room name</a><small>(9/10)</small></li>
         </ul>
       </div>
+      <div id = "content_create" class = "content content_create">
+        <form action="/room/create" method = "post">
+          <ul>
+            <li>
+              <label for="title">title</label>
+              <input type="text" name="title" placeholder = "title...">
+            </li>
+            <li>
+              <label for="max">max</label>
+              <select name="max"></select>
+            </li>
+            <li>
+              <input type="checkbox" class = "password_checkbox">
+              <label for="password">password</label>
+              <input type="password" name = "password" placeholder = "password...">
+            </li>
+            <li>
+              <button type = "submit">create</button>
+            </li>
+          </ul>
+        </form>
+      </div>
       <div id = "content_list" class = "content content_rooms">
         <ul>
           <li><a href="">room name</a><small>(1/10)</small></li>
@@ -61,7 +123,10 @@
           <li><span class = "profile_name">username</span> <span class = "profile"><%= user %></span></li>
         </ul>
       </div>
+
     </div>
   </div>
 </body>
+<script type = "application/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script type = "application/javascript" src = "js/roomSocket.js"></script>
 </html>

@@ -8,9 +8,10 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const connect = require('./schemas');
+
 const indexRouter = require('./routes');
 const authRouter = require('./routes/auth')
-
+const roomRouter = require('./routes/room');
 
 const app = express();
 const webSocket = require('./socket');
@@ -46,7 +47,7 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-
+app.use('/room', roomRouter);
 // page error (next)
 app.use('/', (req, res, next) =>{
   const erorr = new Error('Not Found');

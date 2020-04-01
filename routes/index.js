@@ -7,9 +7,10 @@ router.get('/', (req, res, next) =>{
   res.render('index');
 });
 
-router.get('/room', isLogin, (req, res, next) =>{
+router.get('/room', isLogin, async (req, res, next) =>{
   res.render('room', {
     user : req.user.username
   });
 });
+
 module.exports = router;

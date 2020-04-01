@@ -20,6 +20,11 @@ const roomSchema = new Schema({
     required : true,
     ref : 'users'
   },
+  passwordUse : {
+    type : Boolean,
+    required : true,
+    default : false
+  },
   password : {
     type : String
   },
