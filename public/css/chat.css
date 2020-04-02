@@ -1,0 +1,134 @@
+
+.wrapper{
+  margin : 0 auto 0 auto;
+  margin-top : 40px;
+  display : grid;
+  width : 850px;
+  height : 500px;
+  border : 1px solid #522632;
+  grid-template-columns : 1fr 3fr;
+  grid-template-rows : auto 30px;
+
+  grid-template-areas : "asider main main"
+                        "asider footer footer";
+  background-color : #6F3B48;
+}
+
+.userlist-box {
+  grid-area : asider;
+
+}
+.userlist-box header{
+  border-bottom : 3px solid #FFFFF3;
+  padding-bottom : 10px;
+}
+.userlist-box header h4{
+  margin : 0;
+  padding : 15px 0 10px 10px;
+
+  text-transform : uppercase;
+  font-size : 18px;
+  text-align : left;
+  color :  #FFFFF3;
+}
+.userlist-box header div.exit{
+  font-size : 14px;
+  text-align : right;
+  padding-right : 4px;
+  color :  #FFFFF3;
+  cursor : pointer;
+}
+ul.users{
+  margin : 0px; padding : 0px;
+  margin-top : 10px;
+  padding-left : 10px;
+  overflow-y : auto;
+}
+ul.users li{
+  list-style : none;
+  padding : 10px;
+  border-bottom : 1px solid #fff;
+}
+ul.users li a{
+  text-decoration : none;
+  color :  #FFFFF3;
+  font-size : 16px;
+  font-weight : bold;
+}
+.userchat-box {
+  grid-area : main;
+  background-color : #F5F3F2;
+
+  overflow-y : auto;
+  border-bottom : 1px solid #522632;
+}
+
+ul.chats{
+  margin : 0px; padding : 0px;
+}
+ul.chats .message-box{
+  list-style : none;
+  position : relative;
+}
+ul.chats .message-box #your{
+  margin-left : 10px;
+}
+
+ul.chats .message-box #me{
+  text-align : right;
+  direction : rtl;
+  margin-right : 10px;
+}
+ul.chats .username{
+  margin : 0;
+  margin-bottom : 10px;
+  font-size : 16px;
+  font-weight : bold;
+}
+ul.chats .message{
+  display : inline-block;
+  clear : both;
+  border : 1px solid #111;
+  border-radius : 10px;
+  max-width : 450px;
+  resize: horizontal;
+  font-size : 14px;
+  margin : 0;
+  margin-bottom : 15px;
+  padding : 5px;
+}
+.userchat {
+  grid-area : footer;
+  padding : 5px;
+}
+
+.userchat form{
+  display : flex;
+}
+.userchat input[type = text]{
+  background-color : #F5F3F2;
+  border : 0;
+  padding : 3px;
+  width : 20em;
+}
+.userchat form div.btn{
+  margin-left : auto;
+}
+.userchat form div.btn input[type = submit]{
+  position : relative;
+  border : 0;
+  padding : 3px;
+  top : -1px;
+  background : 0;
+  color : #FFFFF3;
+  cursor : pointer;
+}
+.userchat form div.btn input[type = submit]:hover{
+  color : #6F3B48;
+}
+.userchat form div.btn input[type = submit]:active{
+  color : #FFFFF3;
+}
+.userchat form div.btn input[type = submit]:focus{
+  outline : none;
+}
