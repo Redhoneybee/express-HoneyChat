@@ -1,0 +1,45 @@
+<%- include ('./header.ejs') %>
+  <link rel="stylesheet" href= "css/room.css" type = "text/css" media = "screen">
+  <link rel="stylesheet" href= "css/chat.css" type = "text/css" media = "screen">
+  <title>Document</title>
+</head>
+<body>
+  <div class = "background"></div>
+  <div class = "wrapper">
+    <div class = "userlist-box">
+      <header><h4 class = "title">title</h4>
+      <div class = "exit">EXIT</div>
+      </header>
+
+      <ul class = "users">
+        <li><a href="#">me</a></li>
+        <li><a href="#">user1</a></li>
+        <li><a href="#">user2</a></li>
+        <li><a href="#">user3</a></li>
+      </ul>
+    </div>
+    <div class = "userchat-box">
+      <ul class = "chats">
+        <li class = "message-box">
+          <div id = "your">
+            <p class = "username">user1</p><div class = "message">hahahah</div>
+          </div>
+        </li>
+        <li class = "message-box">
+          <div id = "me">
+            <p class = "username">me</p><div class = "message">hello</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class = "userchat">
+      <form method = "post" enctype = "multipart/form-data">
+        <input type="text">
+        <div class = "btn">
+          <input type="submit" value = "SUBMIT">
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
