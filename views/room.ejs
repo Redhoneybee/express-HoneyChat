@@ -1,6 +1,8 @@
 <%- include ('./header.ejs') %>
   <link rel="stylesheet" href="css/room.css" type = "text/css" media = "screen">
   <title>Express-HoneyChat</title>
+  <script type="text/javascript" src = "js/searchRoom.js"></script>
+  <script type = "application/javascript" src = "js/roomSocket.js"></script>
   <script>
     function roomTabsSwitch(select, tabs_prefix, contents_prefix){
       const s_Array = ['rooms', 'create', 'list', 'profile'];
@@ -29,22 +31,6 @@
         passwordInput.attr('disabled', true);
       }
     }
-    function getRoomList(){
-      $.ajax({
-        url : 'http://localhost:3000/room/roomAll',
-        method : 'POST',
-        dataType : 'json'
-      })
-      .done((json) =>{
-        console.log(json);
-      })
-      .fail((xhr, status, errorToken) =>{
-        console.log(status, errorToken);
-      })
-      .always((xhr, status) =>{
-        
-      });
-    }
     function handlerChecked(event){
       paintToChecked(event.target.checked);
     }
@@ -55,8 +41,8 @@
 
       paintToChecked($('.password_checkbox').checked);
       $('.password_checkbox').change(handlerChecked);
-
-      getRoomList();
+      searchRoomInit();
+      roomSocketInit();
     });
   </script>
 </head>
@@ -79,15 +65,8 @@
       </ul>
 
       <div id = "content_rooms" class = "content content_rooms">
-        <ul>
-          <li><a href="">room name</a><small>(1/10)</small></li>
-          <li><a href="">room name</a><small>(2/10)</small></li>
-          <li><a href="">room name</a><small>(3/10)</small></li>
-          <li><a href="">room name</a><small>(4/10)</small></li>
-          <li><a href="">room name</a><small>(7/10)</small></li>
-          <li><a href="">room name</a><small>(10/10)</small></li>
-          <li><a href="">room name</a><small>(2/10)</small></li>
-          <li><a href="">room name</a><small>(9/10)</small></li>
+        <ul class = "js-rooms">
+          <!-- room list -->
         </ul>
       </div>
       <div id = "content_create" class = "content content_create">
@@ -113,9 +92,7 @@
         </form>
       </div>
       <div id = "content_list" class = "content content_rooms">
-        <ul>
-          <li><a href="">room name</a><small>(1/10)</small></li>
-          <li><a href="">room name</a><small>(2/10)</small></li>
+        <ul class = "js-myRooms">
         </ul>
       </div>
       <div id = "content_profile" class = "content content_profile">
@@ -128,5 +105,5 @@
   </div>
 </body>
 <script type = "application/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-<script type = "application/javascript" src = "js/roomSocket.js"></script>
+
 </html>

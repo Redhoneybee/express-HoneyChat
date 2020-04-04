@@ -1,10 +1,41 @@
 <%- include ('./header.ejs') %>
-  <link rel="stylesheet" href= "css/room.css" type = "text/css" media = "screen">
-  <link rel="stylesheet" href= "css/chat.css" type = "text/css" media = "screen">
+  <link rel="stylesheet" href= "/css/room.css" type = "text/css" media = "screen">
+  <link rel="stylesheet" href= "/css/chat.css" type = "text/css" media = "screen">
   <title>Document</title>
+  <script type="application/javascript" src = "/js/chatSocket.js"></script>
+  <script type="application/javascript">
+    function handlerSubmitChat(evnet){
+      event.preventDefault();
+      const chat = event.target.chat.value;
+      const roomId = '<%= room %>';
+      $.ajax({
+        url : `http://localhost:3000/room/${roomId}/chat`,
+        method : 'POST',
+        dataType : 'json',
+        data : { chat }
+      })
+      .done((json) =>{
+        if(json.ok === 'ok'){
+          event.target.chat.value = '';
+        }
+      })
+      .fail((xhr, status, errorToken) =>{
+        console.log(xhr, status);
+      }).always((xhr, status) => {});
+      event.target.chat.value = '';
+    }
+    $(document).ready(function(){
+      chatSocketInit();
+      $('.chat-form').submit(handlerSubmitChat);
+    });
+  </script>
 </head>
 <body>
   <div class = "background"></div>
+  <div class="system-bar js-system-bar">
+    <h4 class = "system js-system"></h4>
+    <small class= "system-message js-system-message"></small>
+  </div>
   <div class = "wrapper">
     <div class = "userlist-box">
       <header><h4 class = "title">title</h4>
@@ -13,28 +44,16 @@
 
       <ul class = "users">
         <li><a href="#">me</a></li>
-        <li><a href="#">user1</a></li>
-        <li><a href="#">user2</a></li>
-        <li><a href="#">user3</a></li>
       </ul>
     </div>
     <div class = "userchat-box">
-      <ul class = "chats">
-        <li class = "message-box">
-          <div id = "your">
-            <p class = "username">user1</p><div class = "message">hahahah</div>
-          </div>
-        </li>
-        <li class = "message-box">
-          <div id = "me">
-            <p class = "username">me</p><div class = "message">hello</div>
-          </div>
-        </li>
+      <ul class = "chats js-chats">
+        <!-- chatting box  -->
       </ul>
     </div>
     <div class = "userchat">
-      <form method = "post" enctype = "multipart/form-data">
-        <input type="text">
+      <form class = "chat-form" method = "post" enctype = "multipart/form-data">
+        <input type="text" name = "chat">
         <div class = "btn">
           <input type="submit" value = "SUBMIT">
         </div>
@@ -42,4 +61,5 @@
     </div>
   </div>
 </body>
+<script type = "application/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 </html>
