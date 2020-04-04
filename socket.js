@@ -1,6 +1,6 @@
 
 const socketIO = require('socket.io');
-
+const axios = require('axios');
 module.exports = (server, app, middleSession) =>{
   const io = socketIO(server, {
     path : '/socket.io'
@@ -9,7 +9,9 @@ module.exports = (server, app, middleSession) =>{
 
   const room = io.of('/room');
   const chat = io.of('/chat');
-
+  io.use((socket, next) =>{
+    middleSession(socket.request, socket.request.res, next);
+  });
   room.on('connection', (socket) =>{
     const req = socket.request;
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -21,7 +23,7 @@ module.exports = (server, app, middleSession) =>{
     });
   });
 
-  chat.on('connection', (socket) =>{
+  chat.on('connection', async (socket) =>{
     const req = socket.request;
 
     console.log('connect the chat namespace');
@@ -33,9 +35,48 @@ module.exports = (server, app, middleSession) =>{
         .replace(/\?.+/, '');
     socket.join(roomId);
 
+    if(req.session.passport !== undefined){
+      socket.to(roomId).emit('join', {
+        system : 'system',
+        user : req.session.passport.user,
+        message : `"${req.session.passport.user}" is here`
+      });
+      // userlist
+      await axios.post(`http://localhost:3000/room/${roomId}/userList`,{
+          data : socket.adapter.rooms[roomId].username
+        })
+        .then(() =>{
+          console.log('Get userlist');
+        })
+        .catch((error) =>{
+          console.error(error);
+      });
+      if(socket.adapter.rooms[roomId].length === 1){
+        socket.adapter.rooms[roomId].username = [];
+      }
+      socket.adapter.rooms[roomId].username.push(req.session.passport.user);
+    }
+    // disconnect
     socket.on('disconnect', () =>{
       socket.leave(roomId);
       console.log('Disconnected the chat namespace');
+      const currentRoom = socket.adapter.rooms[roomId];
+      const userCount = currentRoom ? currentRoom.length : 0;
+      if(userCount === 0){
+        axios.delete(`http://localhost:3000/room/${roomId}`)
+          .then(() =>{
+            console.log('Deleted room');
+          })
+          .catch((error) =>{
+            console.error(error);
+          });
+      }else{
+        socket.to(roomId).emit('exit', {
+          system : 'system',
+          user : req.session.passport.user,
+          message : `"${req.session.passport.user}" is exit`
+        });
+      }
     });
   });
 };
