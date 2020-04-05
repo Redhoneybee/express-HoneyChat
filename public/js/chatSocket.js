@@ -24,7 +24,6 @@ function paintToSystemMessage(system, systemMessage){
     systemBar.slideUp('slow');
   }, 3000);
 }
-
 function socketUserList(socket){
   socket.on('userList', function(data){
     data.users.Foreach((user) =>{
@@ -62,6 +61,15 @@ function socketUserJoin(socket){
   });
 }
 
+function socketDeleted(socket){
+  socket.on('removeRoom', (data) =>{
+    if(data === 'DELETE'){
+      alert('This Room is removed');
+      history.back();
+    }
+  });
+}
+
 function chatSocketInit(){
   const socket = io.connect('http://localhost:3000/chat', {
     path : '/socket.io'
@@ -84,4 +92,5 @@ function chatSocketInit(){
   socketUserList(socket);
   socketUserChat(socket);
   socketUserExit(socket);
+  socketDeleted(socket);
 }

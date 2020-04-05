@@ -78,6 +78,10 @@ ul.users li a{
   text-decoration : none;
   color :  #FFFFF3;
   font-size : 16px;
+  font-weight : normal;
+}
+ul.users li a.minee{
+  color : #FFFFFF;
   font-weight : bold;
 }
 .userchat-box {

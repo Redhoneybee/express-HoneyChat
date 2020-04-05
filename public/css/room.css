@@ -149,7 +149,8 @@ ul.tabs li a:active, ul.tabs li a.active{
 .content_create ul li input[type = text]:focus
 ,.content_create ul li input[type = password]:focus
 ,.content_create ul li select:focus
-,.content_create ul li button{
+,.content_create ul li button
+,.content_rooms ul li button:focus{
   outline : none;
 }
 
@@ -186,6 +187,19 @@ ul.tabs li a:active, ul.tabs li a.active{
   right : 7px;
 }
 
+.content_rooms ul li button{
+  background : 0;
+  border : 0;
+  color : #6F3B48;
+  text-transform : uppercase;
+  font-weight : bold;
+}
+.content_rooms ul li button:hover{
+  color : #FFFFF3;
+}
+.content_rooms ul li button:active{
+  color : #FFFFFF;
+}
 
 #content_create
 ,#content_list

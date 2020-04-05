@@ -2,14 +2,35 @@
 const ALLROOM = "allRoom"
       MYROOM = "myRoom";
 
+
 function paintToRoomList(json, paintFlag){
   let ul = $('.js-rooms');
   if(paintFlag === MYROOM){
     ul = $('.js-myRooms');
   }
-  json.forEach(function(room){
-    const query = `<li><a href="/room/${room._id}">${room.title}</a><small>(1/10)</small></li>`
+  let count = 0;
+  json.rooms.forEach(function(room){
+    let query = `<li id = ${room._id}><a href="/room/${room._id}">${room.title}</a><small>(${json.person[count]}/${room.max})</small></li>`;
+    if(paintFlag === MYROOM){
+      query = `<li id = ${room._id}><a href="/room/${room._id}">${room.title}</a><small>(${json.person[count]}/${room.max})</small><button>DELETE</button></li>`;
+    }
     ul.append(query);
+    $(`#${room._id} button`).click(function(event){
+      event.preventDefault();
+      const li = event.target.parentNode;
+      console.log(li.nodeName);
+
+      $.ajax({
+        url : `http://localhost:3000/room/${room._id}`,
+        method : 'DELETE'
+      })
+      .done(() => {
+        li.remove();
+        alert('Successed to delete room');
+      })
+      .fail((xhr, status, errorToken) => { console.log(status, errorToken) })
+      .always((xhr, status) => {});
+    });
   });
 }
 
