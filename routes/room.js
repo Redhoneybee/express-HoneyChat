@@ -72,7 +72,6 @@ router.get('/:id', async (req, res , next) =>{
     return res.render('chat', {
       room : room._doc._id,
       title : room._doc.title,
-      chats : [],
       user : req.user.username
     });
   }catch(error){
@@ -105,39 +104,12 @@ router.post('/:id/chat', async (req, res, next) =>{
   };
 });
 
-router.post('/:id/userList', (req, res, next) =>{
-  console.log('userList');
-  try{
-    console.dir(req);
-    const reqUsers = req.body.data;
-    let users = [];
-    console.dir(reqUsers);
-    if(reqUsers !== undefined){
-
-      reqUsers.Foreach(async (user) =>{
-        console.log('userList : ',user);
-        const result = await User.findOne( { id : user });
-
-        if(result._doc._id !== req.user._id){
-          users.push(result._doc.username);
-        }
-      });
-
-      const list = {
-        users
-      }
-
-      io.of('/room').to(req.params.id).emit('userList', list);
-    }
-  }catch(error){
-    next(error);
-  }
-});
 router.delete('/:id', async (req, res, next) =>{
   try{
     await Room.remove( { _id : req.params.id } );
     await Chat.remove( { room : req.params.id } );
     res.send('ok');
+    req.app.get('io').of('/chat').to(req.params.id).emit('removeRoom', 'DELETE');
     setTimeout(() =>{
       req.app.get('io').of('/room').emit('removeRoom', req.params.id);
     }, 2000);
@@ -148,12 +120,21 @@ router.delete('/:id', async (req, res, next) =>{
 });
 router.post('/roomAll', isLogin, async (req, res, next) =>{
   // room list json
+  const io = req.app.get('io');
   await Room.find({}, {
     password : 0,
     owner : 0
     })
     .then((rooms) =>{
-      res.json(rooms);
+      let person = [];
+      rooms.forEach((room) =>{
+        person.push(io.of('/chat').to(room._id).adapter.length);
+      });
+      const json = {
+        rooms,
+        person
+      }
+      res.json(json);
     })
     .catch((error) =>{
       console.error(error);
