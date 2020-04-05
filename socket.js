@@ -1,6 +1,16 @@
 
 const socketIO = require('socket.io');
 const axios = require('axios');
+
+const INC_MAX = 'incrementMax'
+      ,DEC_MAX = 'decrementMax';
+
+function changeMax(socket, room, roomId, flag){
+  room.emit(flag, {
+    room : roomId,
+    max : socket.adapter.rooms[roomId].length,
+  });
+}
 module.exports = (server, app, middleSession) =>{
   const io = socketIO(server, {
     path : '/socket.io'
@@ -41,16 +51,8 @@ module.exports = (server, app, middleSession) =>{
         user : req.session.passport.user,
         message : `"${req.session.passport.user}" is here`
       });
-      // userlist
-      await axios.post(`http://localhost:3000/room/${roomId}/userList`,{
-          data : socket.adapter.rooms[roomId].username
-        })
-        .then(() =>{
-          console.log('Get userlist');
-        })
-        .catch((error) =>{
-          console.error(error);
-      });
+      // increment max
+      changeMax(socket, room, roomId, INC_MAX);
       if(socket.adapter.rooms[roomId].length === 1){
         socket.adapter.rooms[roomId].username = [];
       }
@@ -76,6 +78,7 @@ module.exports = (server, app, middleSession) =>{
           user : req.session.passport.user,
           message : `"${req.session.passport.user}" is exit`
         });
+        changeMax(socket, room, roomId, DEC_MAX);
       }
     });
   });
